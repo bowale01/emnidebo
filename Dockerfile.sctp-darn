@@ -1,23 +1,21 @@
-# Use an appropriate base image
-FROM ubuntu:20.04
+# Use a base image with Python installed
+FROM python:3.9-slim
 
 # Install necessary packages
 RUN apt-get update && apt-get install -y \
+    sctp-tools \
     lksctp-tools \
     iproute2 \
-    tcpdump \
-    git \
-    gcc \
-    make
+    tcpdump
 
-# Download and compile sctp_darn
-WORKDIR /opt
-RUN git clone https://github.com/nplab/sctp_darn.git \
-    && cd sctp_darn \
-    && make
+# Set the working directory
+WORKDIR /opt/sctp_darn
+
+# Copy the Python SCTP server script into the container
+COPY sctp_darn_server.py .
 
 # Expose the SCTP port
 EXPOSE 5000/sctp
 
-# Run the SCTP server
-CMD ["./sctp_darn/sctp_darn_server", "-H", "0.0.0.0", "-P", "5000"]
+# Run the SCTP server using Python
+CMD ["python3", "sctp_darn_server.py"]
