@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: sctp-server
-        image: debolek/sctp-server:latest
+        image: 192.168.49.2:56255/sctp-server:latest
         ports:
         - containerPort: 56255
           protocol: SCTP
