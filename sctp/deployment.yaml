@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: sctp-server
-        image: 192.168.49.2:5000/sctp-darn-server:latest
+        image: debolek/sctp-server:latest
         ports:
         - containerPort: 5000
-          protocol: TCP  # Change to TCP if SCTP is not supported
+          protocol: SCTP
