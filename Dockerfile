@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y \
 
 #Download and compile sctp_darn (or clone from the give repository)
 WORKDIR  /OPT
-RUN git clone https://github.com/nplab/sctp_darn.git \
+RUN git clone https://manpages.org/sctp_darn.git \
     && cd sctp_darn \
     && make
 
