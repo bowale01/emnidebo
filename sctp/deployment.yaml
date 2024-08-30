@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: sctp-server
+  namespace: default # Change to your specific namespace if needed
 spec:
   replicas: 2
   selector:
@@ -18,3 +19,13 @@ spec:
         ports:
         - containerPort: 56255
           protocol: SCTP
+        readinessProbe:  # Optional: Ensures the server is ready
+          exec:
+            command: ['cat', '/tmp/healthy']
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:   # Optional: Ensures the server is alive
+          exec:
+            command: ['cat', '/tmp/healthy']
+          initialDelaySeconds: 5
+          periodSeconds: 10
