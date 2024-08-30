@@ -17,4 +17,5 @@ spec:
         image: debolek/sctp-server:latest
         ports:
         - containerPort: 5000
-          protocol: SCTP
+      imagePullSecrets:
+      - name: regcred
