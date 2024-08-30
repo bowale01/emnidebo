@@ -3,7 +3,7 @@ FROM python:3.9-slim
 
 # Install necessary packages
 RUN apt-get update && apt-get install -y \
-    sctp-tools \
+   # sctp-tools \
     lksctp-tools \
     iproute2 \
     tcpdump
