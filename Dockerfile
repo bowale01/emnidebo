@@ -15,9 +15,9 @@ RUN apt-get update && apt-get install -y \
 
 #Download and compile sctp-tests (or clone from the give repository)
 WORKDIR  /OPT
-RUN git clone git clone https://github.com/nplab/sctp-tests.git \
-    && cd sctp-tests \
-    && make
+#RUN git clone git clone https://github.com/nplab/sctp-tests.git \
+    #&& cd sctp-tests \
+    #&& make
 
 
 # Expose the SCTP port
