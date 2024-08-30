@@ -1,0 +1,135 @@
+1)installation of the minikube was done already
+  Start of the cluster 
+
+    minikube start --nodes=3 --cpus=4  --memory=7500 --disk-size=50g
+
+    
+    Minikube start --nodes=3  -p my cluster
+
+    Enable minikube addons
+
+    minkube addons enable registry
+    minikube addons enable registry-aliases
+
+    we can use this command to check minikube addons list
+
+2)  Building and publishing the SCTP server cointainer image
+
+   create a docker file for sctp_darn 
+
+   #use this for the base image
+FROM ubuntu:20.04
+
+#install necessary packages
+RUN apt-get update && apt-get install -y \
+    scpt-tools \
+    iproute2 \
+    tcpdump \
+    gcc \
+    make
+
+
+#Download and compile sctp_darn (or clone from the give repository)
+WORKDIR  /OPT
+RUN git clone https://github.com/nplab/sctp_darn.git \
+    && cd sctp_darn \
+    && make
+
+
+# Expose the SCTP port
+EXPOSE 5000/sctp
+
+
+# Run the SCTP server
+CMD ["./sctp_darn/sctp_darn_server", "-H, "0.0.0.0", "-P", "5000"]
+
+
+
+Build and push the image to minikube's registry 
+
+eval $(minikube -p minikube docker-env)
+docker build -t sctp-darn-server:latest .
+docker tag sctp-darn-server:latest 192.168.49.2:5000/sctp-darn-server:latest
+docker push 192.168.49.2:5000/sctp-darn-server:latest
+
+
+
+
+
+3)  Deploy the SCTP pods 
+
+ By creating deployment and service manifest  with 2 replica set 
+
+ deployment.yaml 
+
+
+apiVersion: apps/v1
+kind: Deployement
+metadata:
+  name: sctp-server
+spec:
+  replica: 2
+  selector:
+   matchLabels:
+     app: sctp-server
+  template:
+    metadata:
+      labels:
+        app: sctp-server
+    spec:
+      containers:
+      - name: sctp-server
+        image: 192.168.49.2:5000/sctp-darn-server:latest
+        ports:
+        - containerPort: 5000
+          protocol: SCTP
+
+
+
+  service.yaml
+
+  apiVersion: v1
+kind: Service 
+metadata:
+  name:  sctp-service
+spec:
+  selector:
+    app:  sctp-server
+  ports:
+  - protocol: SCTP
+    ports: 5000
+    targetPort: 5000
+  type: LoadBalancer
+
+
+
+
+ Apply the kubernetes manifest 
+
+ kubectl apply -f deployment.yaml
+ kubectl apply -f service.yaml
+
+
+To retrieve service External 
+
+kubectl get svc sctp-service
+
+
+Testing the LB 
+
+sctp_darn_client -H externalaIP -P 5000
+sctp_darn_client -H externalIP -P 5000
+
+
+
+
+Testing the LB  by validating it with tcpdumps
+
+kubectl exec -it minkube  -- tcpdump -i any -nn -v -X port 5000
+
+
+
+
+
+
+
