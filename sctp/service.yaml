@@ -7,6 +7,6 @@ spec:
     app:  sctp-server
   ports:
   - protocol: SCTP
-    ports: 5000
+    ports: 6400
     targetPort: 5000
   type: LoadBalancer
