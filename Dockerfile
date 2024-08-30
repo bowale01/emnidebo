@@ -6,10 +6,11 @@ RUN apt-get update && apt-get install -y \
     sctp-tools \
     iproute2 \
     tcpdump \
+    git \
     gcc \
     make
 
-# Download and compile sctp_darn (or clone from a repository if available)
+# Download and compile sctp_darn
 WORKDIR /opt
 RUN git clone https://github.com/nplab/sctp_darn.git \
     && cd sctp_darn \
