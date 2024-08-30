@@ -7,7 +7,8 @@ RUN apt-get update && apt-get install -y \
     iproute2 \
     tcpdump \
     gcc \
-    make
+    make \
+    git
 
 # Additional commands
 
