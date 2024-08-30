@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y \
 # Additional commands
 
 
-#Download and compile sctp_darn (or clone from the give repository)
+#Download and compile sctp-tests (or clone from the give repository)
 WORKDIR  /OPT
 RUN git clone git clone https://github.com/nplab/sctp-tests.git \
     && cd sctp-tests \
@@ -25,4 +25,4 @@ EXPOSE 5000/sctp
 
 
 # Run the SCTP server
-CMD ["./sctp_darn/sctp_darn_server", "-H, "0.0.0.0", "-P", "5000"]
+CMD ["./sctp-tests/sctp-tests-server", "-H, "0.0.0.0", "-P", "5000"]
