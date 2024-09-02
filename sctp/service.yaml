@@ -1,12 +1,12 @@
 apiVersion: v1
-kind: Service 
+kind: Service
 metadata:
-  name:  sctp-service
+  name: sctp-server
 spec:
   selector:
-    app:  sctp-server
+    app: sctp-server
   ports:
-  - protocol: SCTP
-    ports: 6400
-    targetPort: 5000
+    - protocol: SCTP
+      port: 12345
+      targetPort: 12345
   type: LoadBalancer
