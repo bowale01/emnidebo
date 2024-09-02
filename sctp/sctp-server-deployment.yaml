@@ -14,7 +14,6 @@ spec:
     spec:
       containers:
       - name: sctp-server
-        image: $(minikube ip):5000/sctp-darn-server:latest
+        image: sctp-server:latest
         ports:
-        - containerPort: 5000
-          protocol: SCTP
+        - containerPort: 12345
