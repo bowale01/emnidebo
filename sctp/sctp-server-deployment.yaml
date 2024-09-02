@@ -15,5 +15,6 @@ spec:
       containers:
       - name: sctp-server
         image: sctp-server:latest
+        imagePullPolicy: Never
         ports:
         - containerPort: 12345
