@@ -3,7 +3,7 @@ FROM python:3.9-slim
 
 # Install required dependencies
 RUN apt-get update && apt-get install -y \
-    sctp-tools \
+    lksctp-tools \
     iproute2 \
     && pip install pysctp
 
