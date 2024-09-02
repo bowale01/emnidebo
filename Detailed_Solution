@@ -47,16 +47,17 @@ CMD ["./sctp_darn/sctp_darn_server", "-H, "0.0.0.0", "-P", "5000"]
 
 Build and push the image to minikube's registry 
 
-eval $(minikube -p minikube docker-env)
-docker build -t sctp-darn-server:latest .
-docker tag sctp-darn-server:latest 192.168.49.2:5000/sctp-darn-server:latest
-docker push 192.168.49.2:5000/sctp-darn-server:latest
-
-
+# Configure Docker to use Minikube's Docker daemon
 eval $(minikube -p my-cluster docker-env)
-docker build -t sctp-darn-server:latest .
-docker tag sctp-darn-server:latest localhost:5000/sctp-darn-server:latest
-docker push localhost:5000/sctp-darn-server:latest
+
+# Build the Docker image
+docker build -t sctp-server:latest -f Dockerfile.sctp .
+
+# Tag the Docker image
+docker tag sctp-server:latest localhost:5000/sctp-server:latest
+
+# Push the Docker image to Minikube's internal registry
+docker push localhost:5000/sctp-server:latest
 
 
 
