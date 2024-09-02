@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: sctp-server
-        image: sctp-server:latest
+        image: debolek/sctp-server:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 12345
