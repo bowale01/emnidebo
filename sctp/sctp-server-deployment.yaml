@@ -13,8 +13,8 @@ spec:
         app: sctp-server
     spec:
       containers:
-      - name: sctp-server-deployment
-        image: debolek/sctp-server:latest
+      - name: sctp-server
+        image: sctp-server:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 12345
