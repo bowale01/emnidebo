@@ -1,0 +1,14 @@
+# Use an official Python runtime as a parent image
+FROM python:3.9-slim
+
+# Install required dependencies
+RUN apt-get update && apt-get install -y lksctp-tools && pip install pysctp
+
+# Copy the SCTP server script to the container
+COPY sctp_server.py /usr/src/app/sctp_server.py
+
+# Set the working directory
+WORKDIR /usr/src/app
+
+# Run the SCTP server script
+CMD ["python", "sctp_server.py"]
