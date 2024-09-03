@@ -61,6 +61,13 @@ docker push localhost:5000/sctp-server:latest
 
 
 
+eval $(minikube -p minikube docker-env)
+docker build -t sctp-darn-server:latest .
+docker tag sctp-darn-server:latest 192.168.49.2:5000/sctp-darn-server:latest
+docker push 192.168.49.2:5000/sctp-darn-server:latest
+
+
+
 3)  Deploy the SCTP pods 
 
  By creating deployment and service manifest  with 2 replica set 
