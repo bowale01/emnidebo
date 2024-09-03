@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sctp-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sctp-client
+  template:
+    metadata:
+      labels:
+        app: sctp-client
+    spec:
+      containers:
+      - name: sctp-client
+        image: sctp-client:latest
+        command: ["python", "sctp_client.py"]
