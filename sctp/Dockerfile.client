@@ -1,0 +1,14 @@
+# Use an official Python runtime as a parent image
+FROM python:3.9-slim
+
+# Install required dependencies
+RUN apt-get update && apt-get install -y lksctp-tools iproute2 && pip install pysctp
+
+# Copy the SCTP client script to the container
+COPY sctp_client.py /usr/src/app/sctp_client.py
+
+# Set the working directory
+WORKDIR /usr/src/app
+
+# Run the SCTP client script
+CMD ["python", "sctp_client.py"]
